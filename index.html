@@ -1,186 +1,799 @@
-<!DOCTYPE html>
+ياخي ابيها زي كذا بازبط شوف <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>opsMAJED | Tactical HUD v4.0</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>opsMAJED | Tactical B&W Command</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- مكتبة الأيقونات الرسمية -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="hud-outer-frame">
-        <!-- الزوايا الخارجية -->
-        <span class="corner-text top-left">TOP_LEFT // SEC_01</span>
-        <span class="corner-text top-right">SYS_NEXUS // TOP_RIGHT</span>
-        <span class="corner-text bottom-left">BOT_LEFT // B&W_MODE</span>
-        <span class="corner-text bottom-right">0xBF4_CORE // BOT_RIGHT</span>
+    <!-- خلفية تشويش التلفزيون والمسح الضوئي -->
+    <div class="tv-static-fullscreen"></div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
 
-        <!-- زخارف الجوانب النقطية -->
-        <div class="side-dots left-dots">A-1<br>A-2<br>A-3<br>A-4</div>
-        <div class="side-dots right-dots">B-1<br>B-2<br>B-3<br>B-4</div>
+    <!-- زخارف وتفاصيل الأطراف الخارجية (HUD Frame Decoration) -->
+    <div class="frame-corners corner-tl">+ TOP_LEFT // SEC_01</div>
+    <div class="frame-corners corner-tr">SYS_NEXUS // TOP_RIGHT +</div>
+    <div class="frame-corners corner-bl">+ BOT_LEFT // B&W_MODE</div>
+    <div class="frame-corners corner-br">0xBF4_CORE // BOT_RIGHT +</div>
 
-        <!-- الهيدر العلوي -->
-        <header class="hud-header">
-            <div class="hdr-box left">
-                <div>SIGNAL: STABLE</div>
-                <div class="sub">LATENCY: 14ms</div>
-                <div class="sub">STATUS: COMBAT_READY</div>
-            </div>
-            <div class="hdr-box center">
-                <div class="clock" id="live-time">00:00:00</div>
-                <div class="sub">TACTICAL HUD v4.0</div>
-            </div>
-            <div class="hdr-box right">
-                <div>SYSTEM ACTIVE ■</div>
-                <div class="sub">OPERATOR: opsMAJED</div>
-                <div class="sub">UID: 0xBF4_ELITE</div>
-            </div>
-        </header>
+    <div class="side-decor side-left">
+        <span>A-1</span>
+        <span>A-2</span>
+        <span>A-3</span>
+        <span>A-4</span>
+        <div class="side-ruler"></div>
+    </div>
+    
+    <div class="side-decor side-right">
+        <span>B-1</span>
+        <span>B-2</span>
+        <span>B-3</span>
+        <span>B-4</span>
+        <div class="side-ruler"></div>
+    </div>
 
-        <!-- جسم الواجهة الرئيسي -->
-        <div class="hud-main-grid">
-            
-            <!-- العمود الأيسر -->
-            <div class="hud-col col-left">
-                <div class="panel">
-                    <div class="panel-title">SOLDIER_INFO</div>
-                    <div class="info-grid">
-                        <span>NAME</span><span class="val">opsMAJED</span>
-                        <span>ROLE</span><span class="val">BF4 Assault</span>
-                        <span>FAV_MAP</span><span class="val">Locker / Shanghai</span>
-                        <span>PING</span><span class="val">ms 14</span>
-                        <span>ACCURACY</span><span class="val">89.4%</span>
-                        <span>LEVEL</span><span class="val">Elite / 140</span>
-                    </div>
-                </div>
+    <div class="hud-container">
+        <!-- زوايا الإطار الداخلي -->
+        <div class="corner-bracket top-left"></div>
+        <div class="corner-bracket top-right"></div>
+        <div class="corner-bracket bottom-left"></div>
+        <div class="corner-bracket bottom-right"></div>
 
-                <div class="panel">
-                    <div class="panel-title">MISSION UPTIME</div>
-                    <div class="uptime-val" id="uptime-counter">00D : 00H : 00M : 00S</div>
-                </div>
+        <!-- شريط النظام العلوي (Monochrome Style) -->
+        <header class="hud-header">
+            <div class="header-section text-right">
+                <div class="system-status animate-text"><span class="blink-static">■</span> SYSTEM ACTIVE</div>
+                <div class="header-sub animate-text">OPERATOR: opsMAJED</div>
+                <div class="header-sub animate-text">UID: 0xBF4_ELITE</div>
+            </div>
+            <div class="header-section text-center">
+                <div class="time-widget animate-text" id="live-time">00:00:00</div>
+                <div class="header-sub animate-text">TACTICAL HUD v4.0</div>
+            </div>
+            <div class="header-section text-left">
+                <div class="signal-status animate-text">SIGNAL: <span class="white-glow">STABLE</span></div>
+                <div class="header-sub animate-text">LATENCY: 14ms</div>
+                <div class="header-sub animate-text">STATUS: <span class="white-glow">COMBAT_READY</span></div>
+            </div>
+        </header>
 
-                <div class="panel">
-                    <div class="panel-title">OPERATIONAL_SKILLS</div>
-                    <div class="skill-item">
-                        <div class="skill-head"><span>Aim / Reflexes</span><span>99%</span></div>
-                        <div class="bar"><div class="fill" style="width: 99%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-head"><span>Map Awareness</span><span>95%</span></div>
-                        <div class="bar"><div class="fill" style="width: 95%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-head"><span>Team Tactics</span><span>90%</span></div>
-                        <div class="bar"><div class="fill" style="width: 90%;"></div></div>
-                    </div>
-                </div>
+        <!-- شبكة العناصر الرئيسية -->
+        <div class="hud-grid">
+            
+            <!-- العمود الأيمن: القائمة وحالة النظام والصورة الدوارة -->
+            <div class="grid-column sidebar-right">
+                <nav class="nav-container">
+                    <a href="#" class="nav-btn active animate-text"><span class="btn-icon">📁</span> _HOME</a>
+                    <a href="#" class="nav-btn animate-text"><span class="btn-icon">👤</span> _ABOUT</a>
+                    <a href="#" class="nav-btn animate-text"><span class="btn-icon">⚔️</span> _PROJECTS</a>
+                    <a href="#" class="nav-btn animate-text"><span class="btn-icon">💻</span> _TERMINAL</a>
+                    <a href="#" class="nav-btn animate-text"><span class="btn-icon">🔗</span> _LINKS</a>
+                    <a href="#" class="nav-btn animate-text"><span class="btn-icon">⚙️</span> _SETTINGS</a>
+                </nav>
 
-                <div class="panel video-panel">
-                    <div class="panel-window-bar">
-                        <span class="win-btn">✕</span>
-                        <span class="win-btn">❑</span>
-                        <span class="win-btn">—</span>
-                        <span class="win-title">لقطات ماجد</span>
-                    </div>
-                    <div class="video-box" id="video-box">
-                        <video id="hover-video" loop playsinline preload="auto">
-                            <source src="clip.mp4#t=0.1" type="video/mp4">
-                        </video>
-                        <div class="v-hint">منع تحرك</div>
-                    </div>
-                </div>
-            </div>
+                <div class="hud-panel status-panel">
+                    <div class="panel-header animate-text">COMBAT_STATUS</div>
+                    <div class="panel-content">
+                        <p class="white-glow animate-text">> BF4_NODE: ACTIVE</p>
+                        <p class="white-glow animate-text">> REGION: MIDDLE_EAST</p>
+                        <p class="white-glow animate-text">> ANTICHEAT: BYPASSED</p>
+                        <p class="ip-text animate-text">MATCHMAKING: SEARCHING...</p>
+                        <div class="progress-steps white-glow">
+                            <span>|||||||||||||||||||||||||||</span>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- العمود الأوسط -->
-            <div class="hud-col col-center">
-                <div class="panel profile-panel">
-                    <div class="profile-info">
-                        <h2>opsMAJED</h2>
-                        <div class="sub-tag">// أقوى لاعب باتلفيلد 4 //</div>
-                        <p class="quote">"تحت ضربات المدافع.. لا نترك أثرًا."</p>
-                        <div class="btn-group">
-                            <a href="https://discord.gg/DV7SPuTwf" target="_blank" class="cyber-btn"><i class="fa-brands fa-discord"></i> انضم الآن</a>
-                            <a href="https://www.tiktok.com/@sfbf4" target="_blank" class="cyber-btn"><i class="fa-brands fa-tiktok"></i> TikTok sfbf4@</a>
-                        </div>
-                    </div>
-                    <div class="profile-avatar">
-                        <img src="avatar.png" alt="opsMAJED">
-                    </div>
-                </div>
+                <!-- نافذة الصورة الدوارة 360 درجة -->
+                <div class="hud-panel item-spin-panel">
+                    <div class="panel-header animate-text">ابو جبر الاسطوره</div>
+                    <div class="item-spin-container">
+                        <img src="item.png" alt="3D Spinning Item" class="spin-item-img">
+                    </div>
+                </div>
+            </div>
 
-                <div class="panel terminal-panel">
-                    <div class="panel-window-bar ltr">
-                        <span class="win-btn">✕</span>
-                        <span class="win-btn">❑</span>
-                        <span class="win-btn">—</span>
-                        <span class="win-title">TERMINAL v4.0.0 ●</span>
-                    </div>
-                    <div class="terminal-content">
-                        <div class="term-log">
-                            <p>root@opsMAJED:~$ system_init</p>
-                            <p>.أهلاً بك في نظام التحكم الخاص بـ opsMAJED</p>
-                            <p>.لعرض الأوامر المتاحة help اكتب</p>
-                        </div>
-                        <div class="term-bottom">
-                            <span>$::~root@opsMAJED</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- العمود الأوسط: الافتار والترمينال -->
+            <div class="grid-column main-panel">
+                <div class="profile-card">
+                    <div class="avatar-wrapper">
+                        <div class="hud-radar-circle"></div>
+                        <div class="avatar-box">
+                            <img src="avatar.png" alt="opsMAJED Avatar" class="profile-img">
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <h1 class="profile-name glitch-effect" data-text="opsMAJED">opsMAJED</h1>
+                        <div class="profile-tag animate-text">// أقوى لاعب باتلفيلد 4 //</div>
+                        <p class="profile-quote animate-text">"تحت ضربات المدافع.. لا نترك أثرًا."</p>
+                        <div class="profile-links">
+                            <a href="https://www.tiktok.com/@sfbf4" target="_blank" class="social-link tiktok-btn animate-text">
+                                <i class="fa-brands fa-tiktok icon-style"></i> TikTok <span class="user-handle">@sfbf4</span>
+                            </a>
+                            <a href="https://discord.gg/DV7SPuTwf" target="_blank" class="social-link discord-btn animate-text">
+                                <i class="fa-brands fa-discord icon-style"></i> Discord <span class="user-handle">انضم الآن</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- العمود الأيمن -->
-            <div class="hud-col col-right">
-                <nav class="nav-menu">
-                    <a href="#" class="nav-item active">_HOME 📁</a>
-                    <a href="#" class="nav-item">_ABOUT 👤</a>
-                    <a href="#" class="nav-item">_PROJECTS ⚔️</a>
-                    <a href="#" class="nav-item">_TERMINAL 💻</a>
-                    <a href="#" class="nav-item">_LINKS 🔗</a>
-                    <a href="#" class="nav-item">_SETTINGS ⚙️</a>
-                </nav>
+                <!-- نافذة الترمينال -->
+                <div class="hud-panel terminal-panel">
+                    <div class="panel-header terminal-top animate-text">
+                        <span>● TERMINAL v4.0.0</span>
+                        <div class="window-controls">
+                            <span>—</span>
+                            <span>❑</span>
+                            <span class="close-x">✕</span>
+                        </div>
+                    </div>
+                    <div class="terminal-body" id="terminal-screen">
+                        <div class="terminal-log" id="terminal-log">
+                            <p class="white-glow animate-text">root@opsMAJED:~$ system_init</p>
+                            <p class="animate-text">أهلاً بك في نظام التحكم الخاص بـ <span class="white-glow">opsMAJED</span>.</p>
+                            <p class="animate-text">اكتب <span class="white-glow">help</span> لعرض الأوامر المتاحة.</p>
+                        </div>
+                        <div class="terminal-input-row">
+                            <span class="terminal-prompt">root@opsMAJED:~$</span>
+                            <input type="text" id="terminal-cmd-input" autofocus autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                <div class="panel combat-panel">
-                    <div class="panel-title">COMBAT_STATUS</div>
-                    <div class="combat-info">
-                        <p>> BF4_NODE: ACTIVE</p>
-                        <p>> REGION: MIDDLE_EAST</p>
-                        <p>> ANTICHEAT: BYPASSED</p>
-                        <p class="searching">MATCHMAKING: SEARCHING...</p>
-                        <div class="stripes">||||||||||||||||||||||||||||||||||</div>
-                    </div>
-                </div>
+            <!-- العمود الأيسر: معلومات اللاعب والمهارات ونافذة الفيديو -->
+            <div class="grid-column sidebar-left">
+                <div class="hud-panel info-panel">
+                    <div class="panel-header animate-text">SOLDIER_INFO</div>
+                    <div class="panel-content">
+                        <div class="info-row animate-text"><span>NAME</span><span class="val">opsMAJED</span></div>
+                        <div class="info-row animate-text"><span>ROLE</span><span class="val">BF4 Assault</span></div>
+                        <div class="info-row animate-text"><span>FAV_MAP</span><span class="val">Locker / Shanghai</span></div>
+                        <div class="info-row animate-text"><span>PING</span><span class="val">14 ms</span></div>
+                        <div class="info-row animate-text"><span>ACCURACY</span><span class="val">89.4%</span></div>
+                        <div class="info-row animate-text"><span>LEVEL</span><span class="val">140 / Elite</span></div>
+                    </div>
+                </div>
 
-                <div class="panel item-panel">
-                    <div class="panel-title text-center">ابو جبر الاسطوره</div>
-                    <div class="item-3d-box">
-                        <img src="item.png" alt="Item">
-                    </div>
-                </div>
-            </div>
+                <div class="hud-panel uptime-panel">
+                    <div class="panel-header animate-text">MISSION UPTIME</div>
+                    <div class="panel-content text-center">
+                        <div class="uptime-counter animate-text" id="uptime-counter">00D : 00H : 00M : 00S</div>
+                    </div>
+                </div>
 
-        </div>
+                <div class="hud-panel skills-panel">
+                    <div class="panel-header animate-text">OPERATIONAL_SKILLS</div>
+                    <div class="panel-content">
+                        <div class="skill-row">
+                            <div class="skill-meta animate-text"><span>Aim / Reflexes</span><span>99%</span></div>
+                            <div class="bar-outer"><div class="bar-inner" style="width: 99%;"></div></div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-meta animate-text"><span>Map Awareness</span><span>95%</span></div>
+                            <div class="bar-outer"><div class="bar-inner" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-meta animate-text"><span>Team Tactics</span><span>90%</span></div>
+                            <div class="bar-outer"><div class="bar-inner" style="width: 90%;"></div></div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- شريط البث السفلي -->
-        <div class="hud-ticker-line">
-            <div class="ticker-label">LIVE_FEED ●</div>
-            <div class="ticker-content">
-                <div class="ticker-text">
-                    ◆ أبو مسفر ◆ أبو جبر الاسطوره لحاله ◆ عبد الرحمن ◆ أبو وتين ◆ أبو عتب ◆ رامي البلوي ◆ فزه ◆ تيفا المصري ◆ علوش ◆ يوسف الكويتي
-                    ◆ أبو مسفر ◆ أبو جبر الاسطوره لحاله ◆ عبد الرحمن ◆ أبو وتين ◆ أبو عتب ◆ رامي البلوي ◆ فزه ◆ تيفا المصري ◆ علوش ◆ يوسف الكويتي
-                </div>
-            </div>
-        </div>
+                <!-- نافذة الفيديو -->
+                <div class="hud-panel video-window-panel">
+                    <div class="panel-header window-header animate-text">
+                        <span>لقطات ماجد</span>
+                        <div class="window-controls">
+                            <span>—</span>
+                            <span>❑</span>
+                            <span class="close-x">✕</span>
+                        </div>
+                    </div>
+                    <div class="video-container" id="video-box">
+                        <video id="hover-video" loop playsinline preload="auto">
+                            <source src="clip.mp4#t=0.1" type="video/mp4">
+                            متصفحك لا يدعم تشغيل الفيديو.
+                        </video>
+                        <div class="video-overlay-hint">متع نضرك</div>
+                    </div>
+                </div>
+            </div>
 
-        <!-- الفوتر السفلي -->
-        <footer class="hud-footer">
-            <div class="f-left">ENCRYPTION: KEY-AES-256</div>
-            <div class="f-center">[ SYSTEM_STATE: B&W_STATIC ]</div>
-            <div class="f-right">opsMAJED. All Rights Reserved 2026 ©</div>
-        </footer>
-    </div>
+        </div>
 
-    <script src="script.js"></script>
-    <script src="terminal.js"></script>
+        <!-- شريط البث المباشر -->
+        <div class="live-ticker-bar">
+            <div class="ticker-label"><span class="blink-static">●</span> LIVE_FEED</div>
+            <div class="ticker-wrapper">
+                <div class="ticker-track">
+                    <span>◆ ابو مسفر</span>
+                    <span>◆ ابو جبر الاسطوره لحاله</span>
+                    <span>◆ عبد الرحمن</span>
+                    <span>◆ ابو وتين</span>
+                    <span>◆ يوسف الكويتي</span>
+                    <span>◆ علوش</span>
+                    <span>◆ تيفا المصري</span>
+                    <span>◆ فزه</span>
+                    <span>◆ رامي البلوي</span>
+                    <span>◆ أبو عتب</span>
+                    <span>◆ أبو وتين</span>
+                    <span>◆ أبو جبر</span>
+                    <span>◆ عبد الرحمن</span>
+                    <span>◆ أبو مسفر</span>
+                    <span>◆ يوسف الكويتي</span>
+                    <span>◆ علوش</span>
+                    <span>◆ تيفا المصري</span>
+                    <span>◆ فزه</span>
+                    <span>◆ رامي البلوي</span>
+                    <span>◆ أبو عتب</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريط السفلي -->
+        <footer class="hud-footer">
+            <div class="footer-left animate-text">© 2026 opsMAJED. All Rights Reserved.</div>
+            <div class="footer-center animate-text">░ [ SYSTEM_STATE: B&W_STATIC ] ░</div>
+            <div class="footer-right animate-text">ENCRYPTION: KEY-AES-256</div>
+        </footer>
+    </div>
+
+    <!-- كود الفيديو -->
+    <script>
+        const videoContainer = document.getElementById('video-box');
+        const video = document.getElementById('hover-video');
+        const hint = document.querySelector('.video-overlay-hint');
+
+        if (videoContainer && video) {
+            video.volume = 0.8;
+
+            window.addEventListener('DOMContentLoaded', () => {
+                video.load();
+                video.currentTime = 0.1;
+            });
+
+            videoContainer.addEventListener('mouseenter', () => {
+                video.currentTime = 0; 
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        if (hint) hint.style.opacity = '0';
+                    }).catch(error => {
+                        console.log("تنبيه: يتطلب تفاعل المستخدم أولاً لتشغيل الصوت تلقائياً.");
+                    });
+                }
+            });
+
+            videoContainer.addEventListener('mouseleave', () => {
+                video.pause();
+                video.currentTime = 0.1;
+                if (hint) hint.style.opacity = '1';
+            });
+        }
+    </script>
+
+    <script src="script.js"></script>
+    <script src="terminal.js"></script>
+    <script src="contextmenu.js"></script>
 </body>
-</html>
+</html>          /* =========================================
+   1. الإعدادات الأساسية والألوان (Black & White Theme)
+   ========================================= */
+:root {
+    --bg-black: #000000;
+    --hud-border: #ffffff;
+    --hud-glow: rgba(255, 255, 255, 0.25);
+    --text-white: #ffffff;
+    --text-muted: #888888;
+    --panel-bg: rgba(0, 0, 0, 0.88);
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-arabic: 'Cairo', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    font-family: var(--font-arabic);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* =========================================
+   2. المؤثرات البصرية والخلفية
+   ========================================= */
+.tv-static-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+    background-size: 3px 3px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.3) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    box-shadow: inset 0 0 120px rgba(0,0,0,0.95);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* =========================================
+   3. تفاصيل وزخارف الأطراف الخارجية (HUD Outer Edge Decor)
+   ========================================= */
+.frame-corners {
+    position: fixed;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    z-index: 4;
+    pointer-events: none;
+    letter-spacing: 1px;
+}
+
+.corner-tl { top: 10px; left: 12px; }
+.corner-tr { top: 10px; right: 12px; }
+.corner-bl { bottom: 10px; left: 12px; }
+.corner-br { bottom: 10px; right: 12px; }
+
+/* المسطرة والرموز الجانبية في الأطراف */
+.side-decor {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+    z-index: 4;
+    pointer-events: none;
+}
+
+.side-left { left: 8px; align-items: flex-start; }
+.side-right { right: 8px; align-items: flex-end; }
+
+.side-ruler {
+    width: 2px;
+    height: 180px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #ffffff,
+        #ffffff 4px,
+        transparent 4px,
+        transparent 12px
+    );
+    opacity: 0.3;
+}
+
+/* =========================================
+   4. الحاوية الرئيسية والزوايا الداخلية (ممتدة يمين ويسار)
+   ========================================= */
+.hud-container {
+    position: relative;
+    z-index: 10;
+    width: 98%;               /* تم التوسيع ليشمل الأطراف تقريباً بالكامل */
+    max-width: 1800px;         /* الحد الأقصى للعرض لاستغلال الشاشات العريضة */
+    min-height: 94vh;
+    border: 1px solid var(--hud-border);
+    background: var(--panel-bg);
+    box-shadow: 0 0 25px var(--hud-glow);
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 15px;
+    margin: 10px auto;
+}
+
+/* زوايا الإطار الداخلي */
+.corner-bracket {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 3px solid #ffffff;
+    z-index: 12;
+    pointer-events: none;
+}
+
+.corner-bracket.top-left { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+.corner-bracket.top-right { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+.corner-bracket.bottom-left { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+.corner-bracket.bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+/* =========================================
+   5. شريط الهيدر العلوي
+   ========================================= */
+.hud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--hud-border);
+    padding-bottom: 10px;
+    font-family: var(--font-mono);
+}
+
+.header-section { font-size: 0.85rem; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+
+.system-status { font-weight: bold; color: var(--text-white); }
+.header-sub { color: var(--text-muted); font-size: 0.75rem; }
+.time-widget { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; }
+
+/* =========================================
+   6. شبكة الأعمدة (HUD Grid)
+   ========================================= */
+.hud-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    gap: 15px;
+    flex-grow: 1;
+}
+
+.grid-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* النوافذ واللوحات العامة */
+.hud-panel {
+    border: 1px solid var(--hud-border);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 10px;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.panel-header {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-white);
+    border-bottom: 1px dashed var(--hud-border);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* =========================================
+   7. الأزرار والقائمة الجانبية
+   ========================================= */
+.nav-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-btn {
+    display: block;
+    padding: 10px 15px;
+    border: 1px solid var(--hud-border);
+    color: var(--text-white);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.nav-btn:hover, .nav-btn.active {
+    background: var(--text-white);
+    color: var(--bg-black);
+    box-shadow: 0 0 10px var(--text-white);
+}
+
+/* =========================================
+   8. البطاقة الشخصية الوسطى
+   ========================================= */
+.profile-card {
+    border: 1px solid var(--hud-border);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.avatar-box {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid var(--hud-border);
+    overflow: hidden;
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(120%);
+}
+
+.profile-details { flex-grow: 1; }
+.profile-name { font-size: 1.8rem; font-family: var(--font-mono); letter-spacing: 1px; }
+.profile-tag { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
+.profile-quote { font-size: 0.8rem; font-style: italic; margin-bottom: 12px; }
+
+.profile-links { display: flex; gap: 10px; }
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--hud-border);
+    color: var(--text-white);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    transition: all 0.2s ease;
+}
+
+.social-link:hover {
+    background: var(--text-white);
+    color: var(--bg-black);
+}
+
+/* =========================================
+   9. نافذة الترمينال
+   ========================================= */
+.terminal-panel {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.terminal-body {
+    flex-grow: 1;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.terminal-log p { margin-bottom: 5px; line-height: 1.4; }
+
+.terminal-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.terminal-prompt { color: var(--text-white); }
+
+#terminal-cmd-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-white);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    flex-grow: 1;
+}
+
+/* =========================================
+   10. معلومات اللاعب والمهارات
+   ========================================= */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
+    padding-bottom: 3px;
+}
+
+.info-row .val { color: var(--text-muted); }
+
+.uptime-counter {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+.skill-row { margin-bottom: 10px; }
+
+.skill-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    margin-bottom: 3px;
+}
+
+.bar-outer {
+    width: 100%;
+    height: 6px;
+    border: 1px solid var(--hud-border);
+    background: #111;
+}
+
+.bar-inner { height: 100%; background: var(--text-white); }
+
+/* =========================================
+   11. نافذة الفيديو
+   ========================================= */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    border: 1px solid var(--hud-border);
+    background: #000;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+}
+
+.video-overlay-hint {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2px;
+    transition: opacity 0.3s;
+}
+
+/* =========================================
+   12. العنصر الدوار 3D
+   ========================================= */
+.item-spin-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.item-spin-container {
+    width: 100%;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 800px;
+}
+
+.spin-item-img {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+    animation: continuousSpin3D 5s linear infinite;
+    transform-style: preserve-3d;
+}
+
+@keyframes continuousSpin3D {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+/* =========================================
+   13. شريط البث والتذييل السفلي
+   ========================================= */
+.live-ticker-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--hud-border);
+    background: #000;
+    overflow: hidden;
+    height: 32px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.ticker-label {
+    background: var(--text-white);
+    color: var(--bg-black);
+    padding: 0 10px;
+    font-weight: bold;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.ticker-wrapper { overflow: hidden; white-space: nowrap; width: 100%; }
+
+.ticker-track {
+    display: inline-block;
+    white-space: nowrap;
+    animation: tickerMove 20s linear infinite;
+}
+
+.ticker-track span { margin-right: 25px; }
+
+@keyframes tickerMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.hud-footer {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--hud-border);
+    padding-top: 8px;
+}
+
+.white-glow {
+    color: var(--text-white);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+.blink-static { animation: blink 1s steps(2, start) infinite; }
+
+@keyframes blink { to { visibility: hidden; } }
+
+/* =========================================
+   14. التجاوب مع الشاشات
+   ========================================= */
+@media (max-width: 1024px) {
+    .hud-grid { grid-template-columns: 1fr; }
+    .side-decor, .frame-corners { display: none; }
+} شوف زي كذا ابيها 
