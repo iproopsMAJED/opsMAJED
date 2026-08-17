@@ -10,12 +10,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- خلفية تشويش التلفزيون الأبيض والأسود الكاملة -->
+    <!-- خلفية تشويش التلفزيون والمسح الضوئي -->
     <div class="tv-static-fullscreen"></div>
     <div class="scanlines"></div>
     <div class="vignette"></div>
 
+    <!-- زخارف وتفاصيل الأطراف الخارجية (HUD Frame Decoration) -->
+    <div class="frame-corners corner-tl">+ TOP_LEFT // SEC_01</div>
+    <div class="frame-corners corner-tr">SYS_NEXUS // TOP_RIGHT +</div>
+    <div class="frame-corners corner-bl">+ BOT_LEFT // B&W_MODE</div>
+    <div class="frame-corners corner-br">0xBF4_CORE // BOT_RIGHT +</div>
+
+    <div class="side-decor side-left">
+        <span>A-1</span>
+        <span>A-2</span>
+        <span>A-3</span>
+        <span>A-4</span>
+        <div class="side-ruler"></div>
+    </div>
+    
+    <div class="side-decor side-right">
+        <span>B-1</span>
+        <span>B-2</span>
+        <span>B-3</span>
+        <span>B-4</span>
+        <div class="side-ruler"></div>
+    </div>
+
     <div class="hud-container">
+        <!-- زوايا الإطار الداخلي -->
+        <div class="corner-bracket top-left"></div>
+        <div class="corner-bracket top-right"></div>
+        <div class="corner-bracket bottom-left"></div>
+        <div class="corner-bracket bottom-right"></div>
+
         <!-- شريط النظام العلوي (Monochrome Style) -->
         <header class="hud-header">
             <div class="header-section text-right">
@@ -37,15 +65,15 @@
         <!-- شبكة العناصر الرئيسية -->
         <div class="hud-grid">
             
-            <!-- العمود الأيمن: القائمة وحالة النظام -->
+            <!-- العمود الأيمن: القائمة وحالة النظام والصورة الدوارة -->
             <div class="grid-column sidebar-right">
                 <nav class="nav-container">
-                    <a href="#" class="nav-btn active animate-text"><span class="btn-icon"></span> _HOME</a>
-                    <a href="#" class="nav-btn animate-text"><span class="btn-icon"></span> _ABOUT</a>
-                    <a href="#" class="nav-btn animate-text"><span class="btn-icon"></span> _PROJECTS</a>
-                    <a href="#" class="nav-btn animate-text"><span class="btn-icon"></span> _TERMINAL</a>
-                    <a href="#" class="nav-btn animate-text"><span class="btn-icon"></span> _LINKS</a>
-                    <a href="#" class="nav-btn animate-text"><span class="btn-icon"></span> _SETTINGS</a>
+                    <a href="#" class="nav-btn active animate-text"><span class="btn-icon">📁</span> _HOME</a>
+                    <a href="#" class="nav-btn animate-text"><span class="btn-icon">👤</span> _ABOUT</a>
+                    <a href="#" class="nav-btn animate-text"><span class="btn-icon">⚔️</span> _PROJECTS</a>
+                    <a href="#" class="nav-btn animate-text"><span class="btn-icon">💻</span> _TERMINAL</a>
+                    <a href="#" class="nav-btn animate-text"><span class="btn-icon">🔗</span> _LINKS</a>
+                    <a href="#" class="nav-btn animate-text"><span class="btn-icon">⚙️</span> _SETTINGS</a>
                 </nav>
 
                 <div class="hud-panel status-panel">
@@ -60,6 +88,14 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- نافذة الصورة الدوارة 360 درجة -->
+                <div class="hud-panel item-spin-panel">
+                    <div class="panel-header animate-text">ابو جبر الاسطوره</div>
+                    <div class="item-spin-container">
+                        <img src="item.png" alt="3D Spinning Item" class="spin-item-img">
+                    </div>
+                </div>
             </div>
 
             <!-- العمود الأوسط: الافتار والترمينال -->
@@ -68,7 +104,6 @@
                     <div class="avatar-wrapper">
                         <div class="hud-radar-circle"></div>
                         <div class="avatar-box">
-                            <!-- تعديل المسار ليعمل مع الصورة المرفوعة مباشرة -->
                             <img src="avatar.png" alt="opsMAJED Avatar" class="profile-img">
                         </div>
                     </div>
@@ -77,11 +112,9 @@
                         <div class="profile-tag animate-text">// أقوى لاعب باتلفيلد 4 //</div>
                         <p class="profile-quote animate-text">"تحت ضربات المدافع.. لا نترك أثرًا."</p>
                         <div class="profile-links">
-                            <!-- زر تيك توك الأبيض والأسود -->
                             <a href="https://www.tiktok.com/@sfbf4" target="_blank" class="social-link tiktok-btn animate-text">
                                 <i class="fa-brands fa-tiktok icon-style"></i> TikTok <span class="user-handle">@sfbf4</span>
                             </a>
-                            <!-- زر الديسكورد الأبيض والأسود -->
                             <a href="https://discord.gg/DV7SPuTwf" target="_blank" class="social-link discord-btn animate-text">
                                 <i class="fa-brands fa-discord icon-style"></i> Discord <span class="user-handle">انضم الآن</span>
                             </a>
@@ -152,10 +185,10 @@
                     </div>
                 </div>
 
-                <!-- نافذة الفيديو المحدثة بالمسار المباشر -->
+                <!-- نافذة الفيديو -->
                 <div class="hud-panel video-window-panel">
                     <div class="panel-header window-header animate-text">
-                        <span> لقطات ماجد </span>
+                        <span>لقطات ماجد</span>
                         <div class="window-controls">
                             <span>—</span>
                             <span>❑</span>
@@ -176,11 +209,11 @@
 
         <!-- شريط البث المباشر -->
         <div class="live-ticker-bar">
-            <div class="ticker-label"><span class="blink-static">●</span> الشباب الاساطير</div>
+            <div class="ticker-label"><span class="blink-static">●</span> LIVE_FEED</div>
             <div class="ticker-wrapper">
                 <div class="ticker-track">
                     <span>◆ ابو مسفر</span>
-                    <span>◆ أبو جبر الاسطوره لاحاله</span>
+                    <span>◆ ابو جبر الاسطوره لحاله</span>
                     <span>◆ عبد الرحمن</span>
                     <span>◆ ابو وتين</span>
                     <span>◆ يوسف الكويتي</span>
@@ -189,7 +222,6 @@
                     <span>◆ فزه</span>
                     <span>◆ رامي البلوي</span>
                     <span>◆ أبو عتب</span>
-                    <!-- تكرار القائمة لتأمين الحركة المستمرة -->
                     <span>◆ أبو وتين</span>
                     <span>◆ أبو جبر</span>
                     <span>◆ عبد الرحمن</span>
@@ -212,7 +244,7 @@
         </footer>
     </div>
 
-    <!-- كود تشغيل الفيديو والصوت وتثبيت الإطار الأول كصورة -->
+    <!-- كود الفيديو -->
     <script>
         const videoContainer = document.getElementById('video-box');
         const video = document.getElementById('hover-video');
@@ -229,7 +261,6 @@
             videoContainer.addEventListener('mouseenter', () => {
                 video.currentTime = 0; 
                 const playPromise = video.play();
-                
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
                         if (hint) hint.style.opacity = '0';
@@ -247,7 +278,6 @@
         }
     </script>
 
-    <!-- استدعاء ملفات الـ JavaScript -->
     <script src="script.js"></script>
     <script src="terminal.js"></script>
     <script src="contextmenu.js"></script>
