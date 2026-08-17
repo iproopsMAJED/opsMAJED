@@ -1,13 +1,10 @@
-/* =========================================
-   1. الإعدادات الأساسية والألوان (Black & White Theme)
-   ========================================= */
 :root {
     --bg-black: #000000;
     --hud-border: #ffffff;
-    --hud-glow: rgba(255, 255, 255, 0.25);
+    --hud-glow: rgba(255, 255, 255, 0.2);
     --text-white: #ffffff;
     --text-muted: #888888;
-    --panel-bg: rgba(0, 0, 0, 0.88);
+    --panel-bg: rgba(0, 0, 0, 0.92);
     --font-mono: 'Share Tech Mono', monospace;
     --font-arabic: 'Cairo', sans-serif;
 }
@@ -28,35 +25,25 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    padding: 20px 0;
 }
 
-/* =========================================
-   2. المؤثرات البصرية والخلفية
-   ========================================= */
+/* الخلفيات والتأثيرات */
 .tv-static-fullscreen {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
     background-size: 3px 3px;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.6;
 }
 
 .scanlines {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(
-        rgba(18, 16, 16, 0) 50%, 
-        rgba(0, 0, 0, 0.3) 50%
-    );
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%);
     background-size: 100% 4px;
     z-index: 2;
     pointer-events: none;
@@ -64,89 +51,35 @@ body {
 
 .vignette {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    box-shadow: inset 0 0 120px rgba(0,0,0,0.95);
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.95);
     z-index: 3;
     pointer-events: none;
 }
 
-/* =========================================
-   3. تفاصيل وزخارف الأطراف الخارجية (HUD Outer Edge Decor)
-   ========================================= */
-.frame-corners {
-    position: fixed;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.4);
-    z-index: 4;
-    pointer-events: none;
-    letter-spacing: 1px;
-}
-
-.corner-tl { top: 10px; left: 12px; }
-.corner-tr { top: 10px; right: 12px; }
-.corner-bl { bottom: 10px; left: 12px; }
-.corner-br { bottom: 10px; right: 12px; }
-
-/* المسطرة والرموز الجانبية في الأطراف */
-.side-decor {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.3);
-    z-index: 4;
-    pointer-events: none;
-}
-
-.side-left { left: 8px; align-items: flex-start; }
-.side-right { right: 8px; align-items: flex-end; }
-
-.side-ruler {
-    width: 2px;
-    height: 180px;
-    background: repeating-linear-gradient(
-        to bottom,
-        #ffffff,
-        #ffffff 4px,
-        transparent 4px,
-        transparent 12px
-    );
-    opacity: 0.3;
-}
-
-/* =========================================
-   4. الحاوية الرئيسية والزوايا الداخلية (ممتدة يمين ويسار)
-   ========================================= */
+/* الحاوية الرئيسية - محددة بنسبة نظيفة ومحاذاة ممتازة */
 .hud-container {
     position: relative;
     z-index: 10;
-    width: 98%;               /* تم التوسيع ليشمل الأطراف تقريباً بالكامل */
-    max-width: 1800px;         /* الحد الأقصى للعرض لاستغلال الشاشات العريضة */
-    min-height: 94vh;
+    width: 96%;
+    max-width: 1600px;
+    min-height: 90vh;
     border: 1px solid var(--hud-border);
     background: var(--panel-bg);
-    box-shadow: 0 0 25px var(--hud-glow);
+    box-shadow: 0 0 20px var(--hud-glow);
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 25px 20px 15px 20px;
     gap: 15px;
-    margin: 10px auto;
 }
 
-/* زوايا الإطار الداخلي */
+/* زوايا الإطار */
 .corner-bracket {
     position: absolute;
-    width: 15px;
-    height: 15px;
-    border: 3px solid #ffffff;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #ffffff;
     z-index: 12;
     pointer-events: none;
 }
@@ -156,9 +89,22 @@ body {
 .corner-bracket.bottom-left { bottom: -2px; left: -2px; border-right: none; border-top: none; }
 .corner-bracket.bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
 
-/* =========================================
-   5. شريط الهيدر العلوي
-   ========================================= */
+/* زخارف الزوايا الداخلية بدون تداخل خارج الإطار */
+.inner-corner {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.35);
+    pointer-events: none;
+    direction: ltr;
+}
+
+.ic-tl { top: 6px; left: 10px; }
+.ic-tr { top: 6px; right: 10px; }
+.ic-bl { bottom: 6px; left: 10px; }
+.ic-br { bottom: 6px; right: 10px; }
+
+/* الهيدر العلوي */
 .hud-header {
     display: flex;
     justify-content: space-between;
@@ -166,23 +112,22 @@ body {
     border-bottom: 1px solid var(--hud-border);
     padding-bottom: 10px;
     font-family: var(--font-mono);
+    direction: ltr;
 }
 
-.header-section { font-size: 0.85rem; }
+.header-section { font-size: 0.8rem; }
 .text-right { text-align: right; }
 .text-center { text-align: center; }
 .text-left { text-align: left; }
 
-.system-status { font-weight: bold; color: var(--text-white); }
-.header-sub { color: var(--text-muted); font-size: 0.75rem; }
-.time-widget { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; }
+.system-status { font-weight: bold; }
+.header-sub { color: var(--text-muted); font-size: 0.7rem; }
+.time-widget { font-size: 1.4rem; font-weight: bold; letter-spacing: 2px; }
 
-/* =========================================
-   6. شبكة الأعمدة (HUD Grid)
-   ========================================= */
+/* الشبكة والأعمدة */
 .hud-grid {
     display: grid;
-    grid-template-columns: 300px 1fr 300px;
+    grid-template-columns: 280px 1fr 280px;
     gap: 15px;
     flex-grow: 1;
 }
@@ -190,143 +135,99 @@ body {
 .grid-column {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
-/* النوافذ واللوحات العامة */
 .hud-panel {
     border: 1px solid var(--hud-border);
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.85);
     padding: 10px;
-    position: relative;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
 }
 
 .panel-header {
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-white);
     border-bottom: 1px dashed var(--hud-border);
-    padding-bottom: 5px;
-    margin-bottom: 10px;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
+    direction: ltr;
 }
 
-/* =========================================
-   7. الأزرار والقائمة الجانبية
-   ========================================= */
-.nav-container {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
+/* القائمة الجانبية */
+.nav-container { display: flex; flex-direction: column; gap: 6px; }
 
 .nav-btn {
     display: block;
-    padding: 10px 15px;
+    padding: 8px 12px;
     border: 1px solid var(--hud-border);
     color: var(--text-white);
     text-decoration: none;
     font-family: var(--font-mono);
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-    background: rgba(255, 255, 255, 0.02);
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    direction: ltr;
 }
 
 .nav-btn:hover, .nav-btn.active {
     background: var(--text-white);
     color: var(--bg-black);
-    box-shadow: 0 0 10px var(--text-white);
 }
 
-/* =========================================
-   8. البطاقة الشخصية الوسطى
-   ========================================= */
+/* البروفايل */
 .profile-card {
     border: 1px solid var(--hud-border);
-    padding: 20px;
+    padding: 15px;
     display: flex;
     align-items: center;
-    gap: 20px;
-    background: rgba(0, 0, 0, 0.95);
+    gap: 15px;
 }
 
-.avatar-wrapper {
-    position: relative;
-    width: 100px;
-    height: 100px;
-}
+.avatar-wrapper { width: 85px; height: 85px; flex-shrink: 0; }
 
 .avatar-box {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     border-radius: 50%;
     border: 2px solid var(--hud-border);
     overflow: hidden;
 }
 
-.profile-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(100%) contrast(120%);
-}
-
-.profile-details { flex-grow: 1; }
-.profile-name { font-size: 1.8rem; font-family: var(--font-mono); letter-spacing: 1px; }
-.profile-tag { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
-.profile-quote { font-size: 0.8rem; font-style: italic; margin-bottom: 12px; }
-
-.profile-links { display: flex; gap: 10px; }
+.profile-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+.profile-name { font-size: 1.6rem; font-family: var(--font-mono); direction: ltr; }
+.profile-tag { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+.profile-quote { font-size: 0.75rem; margin-bottom: 10px; }
+.profile-links { display: flex; gap: 8px; }
 
 .social-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
+    padding: 5px 10px;
     border: 1px solid var(--hud-border);
     color: var(--text-white);
     text-decoration: none;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-family: var(--font-mono);
-    transition: all 0.2s ease;
+    direction: ltr;
 }
 
-.social-link:hover {
-    background: var(--text-white);
-    color: var(--bg-black);
-}
+.social-link:hover { background: var(--text-white); color: #000; }
 
-/* =========================================
-   9. نافذة الترمينال
-   ========================================= */
-.terminal-panel {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
+/* الترمينال */
+.terminal-panel { flex-grow: 1; display: flex; flex-direction: column; }
+.window-controls span { margin-left: 5px; cursor: pointer; }
 
 .terminal-body {
     flex-grow: 1;
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 10px 0;
+    direction: ltr;
+    text-align: left;
 }
 
-.terminal-log p { margin-bottom: 5px; line-height: 1.4; }
-
-.terminal-input-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-}
-
-.terminal-prompt { color: var(--text-white); }
+.terminal-input-row { display: flex; gap: 8px; margin-top: 10px; }
 
 #terminal-cmd-input {
     background: transparent;
@@ -334,112 +235,37 @@ body {
     outline: none;
     color: var(--text-white);
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     flex-grow: 1;
 }
 
-/* =========================================
-   10. معلومات اللاعب والمهارات
-   ========================================= */
+/* الجداول والمهارات */
 .info-row {
     display: flex;
     justify-content: space-between;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
-    margin-bottom: 6px;
-    border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
-    padding-bottom: 3px;
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+    direction: ltr;
 }
 
 .info-row .val { color: var(--text-muted); }
+.uptime-counter { font-family: var(--font-mono); font-size: 1rem; font-weight: bold; direction: ltr; }
 
-.uptime-counter {
-    font-family: var(--font-mono);
-    font-size: 1.1rem;
-    font-weight: bold;
-    padding: 8px 0;
-}
-
-.skill-row { margin-bottom: 10px; }
-
-.skill-meta {
-    display: flex;
-    justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    margin-bottom: 3px;
-}
-
-.bar-outer {
-    width: 100%;
-    height: 6px;
-    border: 1px solid var(--hud-border);
-    background: #111;
-}
-
+.skill-row { margin-bottom: 8px; }
+.skill-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.7rem; direction: ltr; }
+.bar-outer { width: 100%; height: 5px; border: 1px solid var(--hud-border); background: #111; }
 .bar-inner { height: 100%; background: var(--text-white); }
 
-/* =========================================
-   11. نافذة الفيديو
-   ========================================= */
-.video-container {
-    position: relative;
-    width: 100%;
-    height: 150px;
-    overflow: hidden;
-    border: 1px solid var(--hud-border);
-    background: #000;
-}
+/* الفيديو والصورة 3D */
+.video-container { position: relative; width: 100%; height: 130px; border: 1px solid var(--hud-border); }
+.video-container video { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+.video-overlay-hint { position: absolute; bottom: 4px; left: 0; right: 0; text-align: center; font-size: 0.6rem; font-family: var(--font-mono); background: rgba(0,0,0,0.7); }
 
-.video-container video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(100%);
-}
-
-.video-overlay-hint {
-    position: absolute;
-    bottom: 5px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 0.65rem;
-    font-family: var(--font-mono);
-    background: rgba(0, 0, 0, 0.7);
-    padding: 2px;
-    transition: opacity 0.3s;
-}
-
-/* =========================================
-   12. العنصر الدوار 3D
-   ========================================= */
-.item-spin-panel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-}
-
-.item-spin-container {
-    width: 100%;
-    height: 160px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 800px;
-}
-
+.item-spin-container { width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; perspective: 600px; }
 .spin-item-img {
-    width: 125px;
-    height: 125px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 2px solid #ffffff;
-    box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+    width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #fff;
     animation: continuousSpin3D 5s linear infinite;
-    transform-style: preserve-3d;
 }
 
 @keyframes continuousSpin3D {
@@ -447,18 +273,16 @@ body {
     100% { transform: rotateY(360deg); }
 }
 
-/* =========================================
-   13. شريط البث والتذييل السفلي
-   ========================================= */
+/* الشريط السفلي والبث */
 .live-ticker-bar {
     display: flex;
     align-items: center;
     border: 1px solid var(--hud-border);
     background: #000;
     overflow: hidden;
-    height: 32px;
+    height: 30px;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
 }
 
 .ticker-label {
@@ -473,14 +297,8 @@ body {
 }
 
 .ticker-wrapper { overflow: hidden; white-space: nowrap; width: 100%; }
-
-.ticker-track {
-    display: inline-block;
-    white-space: nowrap;
-    animation: tickerMove 20s linear infinite;
-}
-
-.ticker-track span { margin-right: 25px; }
+.ticker-track { display: inline-block; white-space: nowrap; animation: tickerMove 20s linear infinite; }
+.ticker-track span { margin-right: 20px; }
 
 @keyframes tickerMove {
     0% { transform: translateX(0); }
@@ -491,25 +309,17 @@ body {
     display: flex;
     justify-content: space-between;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--text-muted);
     border-top: 1px solid var(--hud-border);
-    padding-top: 8px;
+    padding-top: 6px;
+    direction: ltr;
 }
 
-.white-glow {
-    color: var(--text-white);
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-}
-
+.white-glow { color: var(--text-white); }
 .blink-static { animation: blink 1s steps(2, start) infinite; }
-
 @keyframes blink { to { visibility: hidden; } }
 
-/* =========================================
-   14. التجاوب مع الشاشات
-   ========================================= */
 @media (max-width: 1024px) {
     .hud-grid { grid-template-columns: 1fr; }
-    .side-decor, .frame-corners { display: none; }
 }
