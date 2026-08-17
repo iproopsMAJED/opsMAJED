@@ -1,0 +1,550 @@
+/* =========================================
+   1. Base Setup & Monochrome Theme (LTR)
+   ========================================= */
+:root {
+    --bg-black: #000000;
+    --hud-border: #ffffff;
+    --hud-glow: rgba(255, 255, 255, 0.25);
+    --text-white: #ffffff;
+    --text-muted: #888888;
+    --panel-bg: rgba(0, 0, 0, 0.88);
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-arabic: 'Cairo', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    font-family: var(--font-mono);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    direction: ltr;
+}
+
+/* =========================================
+   2. CRT / TV Effects
+   ========================================= */
+.tv-static-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+    background-size: 3px 3px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.3) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    box-shadow: inset 0 0 120px rgba(0,0,0,0.95);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* =========================================
+   3. Outer Edge Decor
+   ========================================= */
+.frame-corners {
+    position: fixed;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    z-index: 4;
+    pointer-events: none;
+    letter-spacing: 1px;
+}
+
+.corner-tl { top: 10px; left: 12px; }
+.corner-tr { top: 10px; right: 12px; }
+.corner-bl { bottom: 10px; left: 12px; }
+.corner-br { bottom: 10px; right: 12px; }
+
+.side-decor {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+    z-index: 4;
+    pointer-events: none;
+}
+
+.side-left { left: 8px; align-items: flex-start; }
+.side-right { right: 8px; align-items: flex-end; }
+
+.side-ruler {
+    width: 2px;
+    height: 180px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #ffffff,
+        #ffffff 4px,
+        transparent 4px,
+        transparent 12px
+    );
+    opacity: 0.3;
+}
+
+/* =========================================
+   4. Main Container
+   ========================================= */
+.hud-container {
+    position: relative;
+    z-index: 10;
+    width: 98%;
+    max-width: 1800px;
+    min-height: 94vh;
+    border: 1px solid var(--hud-border);
+    background: var(--panel-bg);
+    box-shadow: 0 0 25px var(--hud-glow);
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 15px;
+    margin: 10px auto;
+}
+
+.corner-bracket {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 3px solid #ffffff;
+    z-index: 12;
+    pointer-events: none;
+}
+
+.corner-bracket.top-left { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+.corner-bracket.top-right { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+.corner-bracket.bottom-left { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+.corner-bracket.bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+/* =========================================
+   5. Header
+   ========================================= */
+.hud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--hud-border);
+    padding-bottom: 10px;
+    font-family: var(--font-mono);
+}
+
+.header-section { font-size: 0.85rem; }
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.system-status { font-weight: bold; color: var(--text-white); }
+.header-sub { color: var(--text-muted); font-size: 0.75rem; }
+.time-widget { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; }
+
+/* =========================================
+   6. Grid Columns
+   ========================================= */
+.hud-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    gap: 15px;
+    flex-grow: 1;
+}
+
+.grid-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.hud-panel {
+    border: 1px solid var(--hud-border);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 10px;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.panel-header {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-white);
+    border-bottom: 1px dashed var(--hud-border);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.window-controls span {
+    margin-left: 6px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.window-controls span:hover { opacity: 1; }
+
+/* =========================================
+   7. Navigation
+   ========================================= */
+.nav-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 14px;
+    border: 1px solid var(--hud-border);
+    color: var(--text-white);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.nav-btn:hover, .nav-btn.active {
+    background: var(--text-white);
+    color: var(--bg-black);
+    box-shadow: 0 0 10px var(--text-white);
+}
+
+/* =========================================
+   8. Profile Card
+   ========================================= */
+.profile-card {
+    border: 1px solid var(--hud-border);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+}
+
+.avatar-box {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid var(--hud-border);
+    overflow: hidden;
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(120%);
+}
+
+.profile-details {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.profile-name { font-size: 1.8rem; font-family: var(--font-mono); letter-spacing: 1px; margin-bottom: 2px; }
+.profile-tag { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; }
+.profile-quote { font-size: 0.8rem; font-family: var(--font-arabic); font-style: italic; color: #ccc; }
+
+.profile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--hud-border);
+    color: var(--text-white);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.social-link:hover {
+    background: var(--text-white);
+    color: var(--bg-black);
+}
+
+/* =========================================
+   9. Terminal
+   ========================================= */
+.terminal-panel {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 250px;
+}
+
+.terminal-body {
+    flex-grow: 1;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0;
+    text-align: left;
+}
+
+.terminal-log p { margin-bottom: 5px; line-height: 1.4; }
+
+.terminal-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.terminal-prompt { color: var(--text-white); }
+
+#terminal-cmd-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-white);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    flex-grow: 1;
+}
+
+/* =========================================
+   10. Info & Skills
+   ========================================= */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
+    padding-bottom: 3px;
+}
+
+.info-row .val { color: var(--text-muted); }
+
+.uptime-counter {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+.skill-row { margin-bottom: 10px; }
+
+.skill-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    margin-bottom: 3px;
+}
+
+.bar-outer {
+    width: 100%;
+    height: 6px;
+    border: 1px solid var(--hud-border);
+    background: #111;
+}
+
+.bar-inner { height: 100%; background: var(--text-white); }
+
+.status-panel .panel-content p {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.progress-steps {
+    font-family: var(--font-mono);
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    margin-top: 8px;
+}
+
+/* =========================================
+   11. Video Window
+   ========================================= */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+    border: 1px solid var(--hud-border);
+    background: #000;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+}
+
+.video-overlay-hint {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2px;
+    transition: opacity 0.3s;
+}
+
+/* =========================================
+   12. 3D Spinner Item
+   ========================================= */
+.item-spin-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.item-spin-container {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 800px;
+}
+
+.spin-item-img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+    animation: continuousSpin3D 5s linear infinite;
+    transform-style: preserve-3d;
+}
+
+@keyframes continuousSpin3D {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+/* =========================================
+   13. Live Feed Ticker & Footer
+   ========================================= */
+.live-ticker-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--hud-border);
+    background: #000;
+    overflow: hidden;
+    height: 32px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.ticker-label {
+    background: var(--text-white);
+    color: var(--bg-black);
+    padding: 0 12px;
+    font-weight: bold;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.ticker-wrapper { overflow: hidden; white-space: nowrap; width: 100%; }
+
+.ticker-track {
+    display: inline-block;
+    white-space: nowrap;
+    animation: tickerMove 20s linear infinite;
+}
+
+.ticker-track span { margin-right: 25px; font-family: var(--font-arabic); }
+
+@keyframes tickerMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.hud-footer {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--hud-border);
+    padding-top: 8px;
+}
+
+.white-glow {
+    color: var(--text-white);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+.blink-static { animation: blink 1s steps(2, start) infinite; }
+
+@keyframes blink { to { visibility: hidden; } }
+
+/* =========================================
+   14. Responsiveness
+   ========================================= */
+@media (max-width: 1024px) {
+    .hud-grid { grid-template-columns: 1fr; }
+    .side-decor, .frame-corners { display: none; }
+}
