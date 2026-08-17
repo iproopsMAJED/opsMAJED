@@ -3,249 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>opsMAJED | Tactical B&W Command</title>
+    <title>opsMAJED | Tactical HUD v4.0</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- خلفية تشويش التلفزيون والمسح الضوئي -->
-    <div class="tv-static-fullscreen"></div>
-    <div class="scanlines"></div>
-    <div class="vignette"></div>
+    <div class="hud-outer-frame">
+        <!-- الزوايا الخارجية -->
+        <span class="corner-text top-left">TOP_LEFT // SEC_01</span>
+        <span class="corner-text top-right">SYS_NEXUS // TOP_RIGHT</span>
+        <span class="corner-text bottom-left">BOT_LEFT // B&W_MODE</span>
+        <span class="corner-text bottom-right">0xBF4_CORE // BOT_RIGHT</span>
 
-    <div class="hud-container">
-        <!-- زوايا الإطار الداخلي -->
-        <div class="corner-bracket top-left"></div>
-        <div class="corner-bracket top-right"></div>
-        <div class="corner-bracket bottom-left"></div>
-        <div class="corner-bracket bottom-right"></div>
+        <!-- زخارف الجوانب النقطية -->
+        <div class="side-dots left-dots">A-1<br>A-2<br>A-3<br>A-4</div>
+        <div class="side-dots right-dots">B-1<br>B-2<br>B-3<br>B-4</div>
 
-        <!-- زخارف داخلية ثابتة الإطار -->
-        <div class="inner-corner ic-tl">+ SEC_01 // TOP_LEFT</div>
-        <div class="inner-corner ic-tr">SYS_NEXUS // TOP_RIGHT +</div>
-        <div class="inner-corner ic-bl">+ B&W_MODE // BOT_LEFT</div>
-        <div class="inner-corner ic-br">0xBF4_CORE // BOT_RIGHT +</div>
-
-        <!-- شريط النظام العلوي -->
+        <!-- الهيدر العلوي -->
         <header class="hud-header">
-            <div class="header-section text-right">
-                <div class="system-status"><span class="blink-static">■</span> SYSTEM ACTIVE</div>
-                <div class="header-sub">OPERATOR: opsMAJED</div>
-                <div class="header-sub">UID: 0xBF4_ELITE</div>
+            <div class="hdr-box left">
+                <div>SIGNAL: STABLE</div>
+                <div class="sub">LATENCY: 14ms</div>
+                <div class="sub">STATUS: COMBAT_READY</div>
             </div>
-            <div class="header-section text-center">
-                <div class="time-widget" id="live-time">00:00:00</div>
-                <div class="header-sub">TACTICAL HUD v4.0</div>
+            <div class="hdr-box center">
+                <div class="clock" id="live-time">00:00:00</div>
+                <div class="sub">TACTICAL HUD v4.0</div>
             </div>
-            <div class="header-section text-left">
-                <div class="signal-status">SIGNAL: <span class="white-glow">STABLE</span></div>
-                <div class="header-sub">LATENCY: 14ms</div>
-                <div class="header-sub">STATUS: <span class="white-glow">COMBAT_READY</span></div>
+            <div class="hdr-box right">
+                <div>SYSTEM ACTIVE ■</div>
+                <div class="sub">OPERATOR: opsMAJED</div>
+                <div class="sub">UID: 0xBF4_ELITE</div>
             </div>
         </header>
 
-        <!-- شبكة العناصر الرئيسية -->
-        <div class="hud-grid">
+        <!-- جسم الواجهة الرئيسي -->
+        <div class="hud-main-grid">
             
-            <!-- العمود الأيمن -->
-            <div class="grid-column sidebar-right">
-                <nav class="nav-container">
-                    <a href="#" class="nav-btn active"><span class="btn-icon">📁</span> _HOME</a>
-                    <a href="#" class="nav-btn"><span class="btn-icon">👤</span> _ABOUT</a>
-                    <a href="#" class="nav-btn"><span class="btn-icon">⚔️</span> _PROJECTS</a>
-                    <a href="#" class="nav-btn"><span class="btn-icon">💻</span> _TERMINAL</a>
-                    <a href="#" class="nav-btn"><span class="btn-icon">🔗</span> _LINKS</a>
-                    <a href="#" class="nav-btn"><span class="btn-icon">⚙️</span> _SETTINGS</a>
-                </nav>
-
-                <div class="hud-panel status-panel">
-                    <div class="panel-header">COMBAT_STATUS</div>
-                    <div class="panel-content">
-                        <p class="white-glow">> BF4_NODE: ACTIVE</p>
-                        <p class="white-glow">> REGION: MIDDLE_EAST</p>
-                        <p class="white-glow">> ANTICHEAT: BYPASSED</p>
-                        <p class="ip-text">MATCHMAKING: SEARCHING...</p>
-                        <div class="progress-steps white-glow">
-                            <span>|||||||||||||||||||||||||||</span>
-                        </div>
+            <!-- العمود الأيسر -->
+            <div class="hud-col col-left">
+                <div class="panel">
+                    <div class="panel-title">SOLDIER_INFO</div>
+                    <div class="info-grid">
+                        <span>NAME</span><span class="val">opsMAJED</span>
+                        <span>ROLE</span><span class="val">BF4 Assault</span>
+                        <span>FAV_MAP</span><span class="val">Locker / Shanghai</span>
+                        <span>PING</span><span class="val">ms 14</span>
+                        <span>ACCURACY</span><span class="val">89.4%</span>
+                        <span>LEVEL</span><span class="val">Elite / 140</span>
                     </div>
                 </div>
 
-                <div class="hud-panel item-spin-panel">
-                    <div class="panel-header">ابو جبر </div>
-                    <div class="item-spin-container">
-                        <img src="item.png" alt="3D Spinning Item" class="spin-item-img">
+                <div class="panel">
+                    <div class="panel-title">MISSION UPTIME</div>
+                    <div class="uptime-val" id="uptime-counter">00D : 00H : 00M : 00S</div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title">OPERATIONAL_SKILLS</div>
+                    <div class="skill-item">
+                        <div class="skill-head"><span>Aim / Reflexes</span><span>99%</span></div>
+                        <div class="bar"><div class="fill" style="width: 99%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-head"><span>Map Awareness</span><span>95%</span></div>
+                        <div class="bar"><div class="fill" style="width: 95%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-head"><span>Team Tactics</span><span>90%</span></div>
+                        <div class="bar"><div class="fill" style="width: 90%;"></div></div>
+                    </div>
+                </div>
+
+                <div class="panel video-panel">
+                    <div class="panel-window-bar">
+                        <span class="win-btn">✕</span>
+                        <span class="win-btn">❑</span>
+                        <span class="win-btn">—</span>
+                        <span class="win-title">لقطات ماجد</span>
+                    </div>
+                    <div class="video-box" id="video-box">
+                        <video id="hover-video" loop playsinline preload="auto">
+                            <source src="clip.mp4#t=0.1" type="video/mp4">
+                        </video>
+                        <div class="v-hint">منع تحرك</div>
                     </div>
                 </div>
             </div>
 
             <!-- العمود الأوسط -->
-            <div class="grid-column main-panel">
-                <div class="profile-card">
-                    <div class="avatar-wrapper">
-                        <div class="avatar-box">
-                            <img src="avatar.png" alt="opsMAJED Avatar" class="profile-img">
+            <div class="hud-col col-center">
+                <div class="panel profile-panel">
+                    <div class="profile-info">
+                        <h2>opsMAJED</h2>
+                        <div class="sub-tag">// أقوى لاعب باتلفيلد 4 //</div>
+                        <p class="quote">"تحت ضربات المدافع.. لا نترك أثرًا."</p>
+                        <div class="btn-group">
+                            <a href="https://discord.gg/DV7SPuTwf" target="_blank" class="cyber-btn"><i class="fa-brands fa-discord"></i> انضم الآن</a>
+                            <a href="https://www.tiktok.com/@sfbf4" target="_blank" class="cyber-btn"><i class="fa-brands fa-tiktok"></i> TikTok sfbf4@</a>
                         </div>
                     </div>
-                    <div class="profile-details">
-                        <h1 class="profile-name">opsMAJED</h1>
-                        <div class="profile-tag">// أقوى لاعب باتلفيلد 4 //</div>
-                        <p class="profile-quote">"تحت ضربات المدافع.. لا نترك أثرًا."</p>
-                        <div class="profile-links">
-                            <a href="https://www.tiktok.com/@sfbf4" target="_blank" class="social-link">
-                                <i class="fa-brands fa-tiktok"></i> TikTok <span class="user-handle">@sfbf4</span>
-                            </a>
-                            <a href="https://discord.gg/DV7SPuTwf" target="_blank" class="social-link">
-                                <i class="fa-brands fa-discord"></i> Discord <span class="user-handle">انضم الآن</span>
-                            </a>
-                        </div>
+                    <div class="profile-avatar">
+                        <img src="avatar.png" alt="opsMAJED">
                     </div>
                 </div>
 
-                <div class="hud-panel terminal-panel">
-                    <div class="panel-header terminal-top">
-                        <span>● TERMINAL v4.0.0</span>
-                        <div class="window-controls">
-                            <span>—</span>
-                            <span>❑</span>
-                            <span class="close-x">✕</span>
-                        </div>
+                <div class="panel terminal-panel">
+                    <div class="panel-window-bar ltr">
+                        <span class="win-btn">✕</span>
+                        <span class="win-btn">❑</span>
+                        <span class="win-btn">—</span>
+                        <span class="win-title">TERMINAL v4.0.0 ●</span>
                     </div>
-                    <div class="terminal-body">
-                        <div class="terminal-log">
-                            <p class="white-glow">root@opsMAJED:~$ system_init</p>
-                            <p>أهلاً بك في نظام التحكم الخاص بـ <span class="white-glow">opsMAJED</span>.</p>
-                            <p>اكتب <span class="white-glow">help</span> لعرض الأوامر المتاحة.</p>
+                    <div class="terminal-content">
+                        <div class="term-log">
+                            <p>root@opsMAJED:~$ system_init</p>
+                            <p>.أهلاً بك في نظام التحكم الخاص بـ opsMAJED</p>
+                            <p>.لعرض الأوامر المتاحة help اكتب</p>
                         </div>
-                        <div class="terminal-input-row">
-                            <span class="terminal-prompt">root@opsMAJED:~$</span>
-                            <input type="text" id="terminal-cmd-input" autofocus autocomplete="off" spellcheck="false">
+                        <div class="term-bottom">
+                            <span>$::~root@opsMAJED</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- العمود الأيسر -->
-            <div class="grid-column sidebar-left">
-                <div class="hud-panel info-panel">
-                    <div class="panel-header">SOLDIER_INFO</div>
-                    <div class="panel-content">
-                        <div class="info-row"><span>NAME</span><span class="val">opsMAJED</span></div>
-                        <div class="info-row"><span>ROLE</span><span class="val">BF4 Assault</span></div>
-                        <div class="info-row"><span>FAV_MAP</span><span class="val">Locker / Shanghai</span></div>
-                        <div class="info-row"><span>PING</span><span class="val">14 ms</span></div>
-                        <div class="info-row"><span>ACCURACY</span><span class="val">89.4%</span></div>
-                        <div class="info-row"><span>LEVEL</span><span class="val">140 / Elite</span></div>
+            <!-- العمود الأيمن -->
+            <div class="hud-col col-right">
+                <nav class="nav-menu">
+                    <a href="#" class="nav-item active">_HOME 📁</a>
+                    <a href="#" class="nav-item">_ABOUT 👤</a>
+                    <a href="#" class="nav-item">_PROJECTS ⚔️</a>
+                    <a href="#" class="nav-item">_TERMINAL 💻</a>
+                    <a href="#" class="nav-item">_LINKS 🔗</a>
+                    <a href="#" class="nav-item">_SETTINGS ⚙️</a>
+                </nav>
+
+                <div class="panel combat-panel">
+                    <div class="panel-title">COMBAT_STATUS</div>
+                    <div class="combat-info">
+                        <p>> BF4_NODE: ACTIVE</p>
+                        <p>> REGION: MIDDLE_EAST</p>
+                        <p>> ANTICHEAT: BYPASSED</p>
+                        <p class="searching">MATCHMAKING: SEARCHING...</p>
+                        <div class="stripes">||||||||||||||||||||||||||||||||||</div>
                     </div>
                 </div>
 
-                <div class="hud-panel uptime-panel">
-                    <div class="panel-header">MISSION UPTIME</div>
-                    <div class="panel-content text-center">
-                        <div class="uptime-counter" id="uptime-counter">00D : 00H : 00M : 00S</div>
-                    </div>
-                </div>
-
-                <div class="hud-panel skills-panel">
-                    <div class="panel-header">OPERATIONAL_SKILLS</div>
-                    <div class="panel-content">
-                        <div class="skill-row">
-                            <div class="skill-meta"><span>Aim / Reflexes</span><span>99%</span></div>
-                            <div class="bar-outer"><div class="bar-inner" style="width: 99%;"></div></div>
-                        </div>
-                        <div class="skill-row">
-                            <div class="skill-meta"><span>Map Awareness</span><span>95%</span></div>
-                            <div class="bar-outer"><div class="bar-inner" style="width: 95%;"></div></div>
-                        </div>
-                        <div class="skill-row">
-                            <div class="skill-meta"><span>Team Tactics</span><span>90%</span></div>
-                            <div class="bar-outer"><div class="bar-inner" style="width: 90%;"></div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hud-panel video-window-panel">
-                    <div class="panel-header window-header">
-                        <span>لقطات ماجد</span>
-                        <div class="window-controls">
-                            <span>—</span>
-                            <span>❑</span>
-                            <span class="close-x">✕</span>
-                        </div>
-                    </div>
-                    <div class="video-container" id="video-box">
-                        <video id="hover-video" loop playsinline preload="auto">
-                            <source src="clip.mp4#t=0.1" type="video/mp4">
-                        </video>
-                        <div class="video-overlay-hint">متع نضرك</div>
+                <div class="panel item-panel">
+                    <div class="panel-title text-center">ابو جبر الاسطوره</div>
+                    <div class="item-3d-box">
+                        <img src="item.png" alt="Item">
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- شريط البث المباشر -->
-        <div class="live-ticker-bar">
-            <div class="ticker-label"><span class="blink-static">●</span> LIVE_FEED</div>
-            <div class="ticker-wrapper">
-                <div class="ticker-track">
-                    <span>◆ ابو مسفر</span>
-                    <span>◆ ابو جبر الاسطوره لحاله</span>
-                    <span>◆ عبد الرحمن</span>
-                    <span>◆ ابو وتين</span>
-                    <span>◆ يوسف الكويتي</span>
-                    <span>◆ علوش</span>
-                    <span>◆ تيفا المصري</span>
-                    <span>◆ فزه</span>
-                    <span>◆ رامي البلوي</span>
-                    <span>◆ أبو عتب</span>
-                    <span>◆ أبو وتين</span>
-                    <span>◆ أبو جبر</span>
-                    <span>◆ عبد الرحمن</span>
-                    <span>◆ أبو مسفر</span>
-                    <span>◆ يوسف الكويتي</span>
-                    <span>◆ علوش</span>
-                    <span>◆ تيفا المصري</span>
-                    <span>◆ فزه</span>
-                    <span>◆ رامي البلوي</span>
-                    <span>◆ أبو عتب</span>
+        <!-- شريط البث السفلي -->
+        <div class="hud-ticker-line">
+            <div class="ticker-label">LIVE_FEED ●</div>
+            <div class="ticker-content">
+                <div class="ticker-text">
+                    ◆ أبو مسفر ◆ أبو جبر الاسطوره لحاله ◆ عبد الرحمن ◆ أبو وتين ◆ أبو عتب ◆ رامي البلوي ◆ فزه ◆ تيفا المصري ◆ علوش ◆ يوسف الكويتي
+                    ◆ أبو مسفر ◆ أبو جبر الاسطوره لحاله ◆ عبد الرحمن ◆ أبو وتين ◆ أبو عتب ◆ رامي البلوي ◆ فزه ◆ تيفا المصري ◆ علوش ◆ يوسف الكويتي
                 </div>
             </div>
         </div>
 
-        <!-- الشريط السفلي -->
+        <!-- الفوتر السفلي -->
         <footer class="hud-footer">
-            <div class="footer-left">© 2026 opsMAJED. All Rights Reserved.</div>
-            <div class="footer-center">░ [ SYSTEM_STATE: B&W_STATIC ] ░</div>
-            <div class="footer-right">ENCRYPTION: KEY-AES-256</div>
+            <div class="f-left">ENCRYPTION: KEY-AES-256</div>
+            <div class="f-center">[ SYSTEM_STATE: B&W_STATIC ]</div>
+            <div class="f-right">opsMAJED. All Rights Reserved 2026 ©</div>
         </footer>
     </div>
 
-    <script>
-        const videoContainer = document.getElementById('video-box');
-        const video = document.getElementById('hover-video');
-        const hint = document.querySelector('.video-overlay-hint');
-
-        if (videoContainer && video) {
-            video.volume = 0.8;
-            window.addEventListener('DOMContentLoaded', () => {
-                video.load();
-                video.currentTime = 0.1;
-            });
-            videoContainer.addEventListener('mouseenter', () => {
-                video.currentTime = 0; 
-                video.play().then(() => {
-                    if (hint) hint.style.opacity = '0';
-                }).catch(() => {});
-            });
-            videoContainer.addEventListener('mouseleave', () => {
-                video.pause();
-                video.currentTime = 0.1;
-                if (hint) hint.style.opacity = '1';
-            });
-        }
-    </script>
     <script src="script.js"></script>
     <script src="terminal.js"></script>
 </body>
