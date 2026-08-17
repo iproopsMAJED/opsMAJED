@@ -1,3 +1,17 @@
+/* =========================================
+   1. الإعدادات الأساسية والألوان (Black & White Theme)
+   ========================================= */
+:root {
+    --bg-black: #000000;
+    --hud-border: #ffffff;
+    --hud-glow: rgba(255, 255, 255, 0.25);
+    --text-white: #ffffff;
+    --text-muted: #888888;
+    --panel-bg: rgba(0, 0, 0, 0.88);
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-arabic: 'Cairo', sans-serif;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,243 +20,451 @@
 }
 
 body {
-    background-color: #000000;
-    color: #ffffff;
-    font-family: 'Share Tech Mono', 'Cairo', monospace;
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    font-family: var(--font-arabic);
+    overflow-x: hidden;
     min-height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
-    padding: 10px;
-}
-
-/* الإطار الخارجي الكامل matching الصورة */
-.hud-outer-frame {
+    align-items: center;
     position: relative;
-    width: 100%;
-    max-width: 1550px;
-    border: 1px solid #ffffff;
-    padding: 15px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: #000000;
 }
 
-/* نصوص الزوايا الخارجية */
-.corner-text {
-    position: absolute;
-    font-size: 0.6rem;
-    color: #666;
+/* =========================================
+   2. المؤثرات البصرية والخلفية
+   ========================================= */
+.tv-static-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+    background-size: 3px 3px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.3) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    box-shadow: inset 0 0 120px rgba(0,0,0,0.95);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* =========================================
+   3. تفاصيل وزخارف الأطراف الخارجية (HUD Outer Edge Decor)
+   ========================================= */
+.frame-corners {
+    position: fixed;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    z-index: 4;
+    pointer-events: none;
     letter-spacing: 1px;
 }
-.top-left { top: -18px; left: 0; }
-.top-right { top: -18px; right: 0; }
-.bottom-left { bottom: -18px; left: 0; }
-.bottom-right { bottom: -18px; right: 0; }
 
-/* النقاط الجانبية */
-.side-dots {
-    position: absolute;
-    top: 35%;
-    font-size: 0.55rem;
-    color: #444;
-    line-height: 1.8;
+.corner-tl { top: 10px; left: 12px; }
+.corner-tr { top: 10px; right: 12px; }
+.corner-bl { bottom: 10px; left: 12px; }
+.corner-br { bottom: 10px; right: 12px; }
+
+/* المسطرة والرموز الجانبية في الأطراف */
+.side-decor {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+    z-index: 4;
+    pointer-events: none;
 }
-.left-dots { left: -25px; text-align: right; }
-.right-dots { right: -25px; text-align: left; }
 
-/* الهيدر العلوي */
+.side-left { left: 8px; align-items: flex-start; }
+.side-right { right: 8px; align-items: flex-end; }
+
+.side-ruler {
+    width: 2px;
+    height: 180px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #ffffff,
+        #ffffff 4px,
+        transparent 4px,
+        transparent 12px
+    );
+    opacity: 0.3;
+}
+
+/* =========================================
+   4. الحاوية الرئيسية والزوايا الداخلية (ممتدة يمين ويسار)
+   ========================================= */
+.hud-container {
+    position: relative;
+    z-index: 10;
+    width: 98%;               /* تم التوسيع ليشمل الأطراف تقريباً بالكامل */
+    max-width: 1800px;         /* الحد الأقصى للعرض لاستغلال الشاشات العريضة */
+    min-height: 94vh;
+    border: 1px solid var(--hud-border);
+    background: var(--panel-bg);
+    box-shadow: 0 0 25px var(--hud-glow);
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 15px;
+    margin: 10px auto;
+}
+
+/* زوايا الإطار الداخلي */
+.corner-bracket {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 3px solid #ffffff;
+    z-index: 12;
+    pointer-events: none;
+}
+
+.corner-bracket.top-left { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+.corner-bracket.top-right { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+.corner-bracket.bottom-left { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+.corner-bracket.bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+/* =========================================
+   5. شريط الهيدر العلوي
+   ========================================= */
 .hud-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ffffff;
-    padding-bottom: 8px;
-    font-size: 0.75rem;
+    border-bottom: 1px solid var(--hud-border);
+    padding-bottom: 10px;
+    font-family: var(--font-mono);
 }
 
-.hdr-box .sub { color: #888; font-size: 0.65rem; }
-.hdr-box.left { text-align: left; direction: ltr; }
-.hdr-box.center { text-align: center; }
-.hdr-box.right { text-align: right; direction: ltr; }
+.header-section { font-size: 0.85rem; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
 
-.clock {
-    font-size: 1.5rem;
-    font-weight: bold;
-    letter-spacing: 3px;
-}
+.system-status { font-weight: bold; color: var(--text-white); }
+.header-sub { color: var(--text-muted); font-size: 0.75rem; }
+.time-widget { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; }
 
-/* الشبكة الأساسية */
-.hud-main-grid {
+/* =========================================
+   6. شبكة الأعمدة (HUD Grid)
+   ========================================= */
+.hud-grid {
     display: grid;
-    grid-template-columns: 260px 1fr 240px;
-    gap: 10px;
+    grid-template-columns: 300px 1fr 300px;
+    gap: 15px;
+    flex-grow: 1;
 }
 
-.hud-col {
+.grid-column {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 }
 
-/* اللوحات وحاوياتها */
-.panel {
-    border: 1px solid #ffffff;
-    padding: 8px 10px;
-    background: #000;
+/* النوافذ واللوحات العامة */
+.hud-panel {
+    border: 1px solid var(--hud-border);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 10px;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
 }
 
-.panel-title {
-    font-size: 0.7rem;
-    border-bottom: 1px dashed #ffffff;
-    padding-bottom: 4px;
-    margin-bottom: 8px;
-    text-align: right;
-    letter-spacing: 1px;
-}
-
-/* العمود الأيسر */
-.info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    row-gap: 4px;
-    font-size: 0.7rem;
-    direction: ltr;
-}
-.info-grid .val { text-align: right; color: #aaa; }
-
-.uptime-val {
-    text-align: center;
-    font-size: 0.9rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-    padding: 5px 0;
-    direction: ltr;
-}
-
-.skill-item { margin-bottom: 6px; }
-.skill-head { display: flex; justify-content: space-between; font-size: 0.65rem; direction: ltr; }
-.bar { width: 100%; height: 4px; border: 1px solid #fff; margin-top: 2px; }
-.fill { height: 100%; background: #fff; }
-
-.video-panel { padding: 0; }
-.panel-window-bar {
-    background: #000;
-    border-bottom: 1px solid #fff;
-    padding: 3px 6px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.65rem;
-}
-.panel-window-bar.ltr { direction: ltr; }
-.win-btn { border: 1px solid #fff; padding: 0 3px; cursor: pointer; font-size: 0.55rem; }
-.win-title { margin-right: auto; font-family: 'Cairo', sans-serif; }
-
-.video-box { position: relative; width: 100%; height: 110px; }
-.video-box video { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
-.v-hint {
-    position: absolute; bottom: 4px; left: 10px;
-    background: #000; border: 1px solid #fff;
-    font-size: 0.6rem; padding: 1px 6px; font-family: 'Cairo', sans-serif;
-}
-
-/* العمود الأوسط */
-.profile-panel {
+.panel-header {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-white);
+    border-bottom: 1px dashed var(--hud-border);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 12px 15px;
 }
 
-.profile-info h2 { font-size: 1.6rem; font-family: 'Share Tech Mono'; }
-.sub-tag { font-size: 0.75rem; color: #888; }
-.quote { font-size: 0.7rem; margin: 6px 0; }
-.btn-group { display: flex; gap: 8px; }
+/* =========================================
+   7. الأزرار والقائمة الجانبية
+   ========================================= */
+.nav-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 
-.cyber-btn {
-    border: 1px solid #fff;
-    color: #fff;
+.nav-btn {
+    display: block;
+    padding: 10px 15px;
+    border: 1px solid var(--hud-border);
+    color: var(--text-white);
     text-decoration: none;
-    font-size: 0.65rem;
-    padding: 4px 8px;
-    font-family: 'Cairo', sans-serif;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.02);
 }
-.cyber-btn:hover { background: #fff; color: #000; }
 
-.profile-avatar img {
-    width: 75px;
-    height: 75px;
+.nav-btn:hover, .nav-btn.active {
+    background: var(--text-white);
+    color: var(--bg-black);
+    box-shadow: 0 0 10px var(--text-white);
+}
+
+/* =========================================
+   8. البطاقة الشخصية الوسطى
+   ========================================= */
+.profile-card {
+    border: 1px solid var(--hud-border);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.avatar-box {
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    border: 2px solid #fff;
-    object-fit: cover;
-    filter: grayscale(100%);
+    border: 2px solid var(--hud-border);
+    overflow: hidden;
 }
 
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(120%);
+}
+
+.profile-details { flex-grow: 1; }
+.profile-name { font-size: 1.8rem; font-family: var(--font-mono); letter-spacing: 1px; }
+.profile-tag { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
+.profile-quote { font-size: 0.8rem; font-style: italic; margin-bottom: 12px; }
+
+.profile-links { display: flex; gap: 10px; }
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--hud-border);
+    color: var(--text-white);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    transition: all 0.2s ease;
+}
+
+.social-link:hover {
+    background: var(--text-white);
+    color: var(--bg-black);
+}
+
+/* =========================================
+   9. نافذة الترمينال
+   ========================================= */
 .terminal-panel {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 0;
-    min-height: 280px;
 }
 
-.terminal-content {
-    padding: 10px;
+.terminal-body {
+    flex-grow: 1;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex-grow: 1;
-    font-size: 0.75rem;
+    padding: 10px 0;
 }
 
-.term-log { text-align: right; }
-.term-log p { margin-bottom: 4px; }
-.term-bottom { direction: ltr; text-align: left; }
+.terminal-log p { margin-bottom: 5px; line-height: 1.4; }
 
-/* العمود الأيمن */
-.nav-menu { display: flex; flex-direction: column; gap: 4px; }
-.nav-item {
-    border: 1px solid #fff;
-    color: #fff;
-    text-decoration: none;
-    padding: 6px 10px;
-    font-size: 0.75rem;
-    text-align: right;
-    direction: ltr;
-}
-.nav-item.active, .nav-item:hover { background: #fff; color: #000; }
-
-.combat-info { font-size: 0.65rem; direction: ltr; line-height: 1.5; }
-.combat-info .searching { margin-top: 5px; }
-.stripes { font-size: 0.5rem; letter-spacing: -1px; margin-top: 4px; }
-
-.item-3d-box {
-    height: 110px;
+.terminal-input-row {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
 }
-.item-3d-box img {
-    max-height: 90px;
+
+.terminal-prompt { color: var(--text-white); }
+
+#terminal-cmd-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-white);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    flex-grow: 1;
+}
+
+/* =========================================
+   10. معلومات اللاعب والمهارات
+   ========================================= */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
+    padding-bottom: 3px;
+}
+
+.info-row .val { color: var(--text-muted); }
+
+.uptime-counter {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+.skill-row { margin-bottom: 10px; }
+
+.skill-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    margin-bottom: 3px;
+}
+
+.bar-outer {
+    width: 100%;
+    height: 6px;
+    border: 1px solid var(--hud-border);
+    background: #111;
+}
+
+.bar-inner { height: 100%; background: var(--text-white); }
+
+/* =========================================
+   11. نافذة الفيديو
+   ========================================= */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    border: 1px solid var(--hud-border);
+    background: #000;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     filter: grayscale(100%);
 }
 
-/* شريط البث السريع */
-.hud-ticker-line {
-    border: 1px solid #fff;
+.video-overlay-hint {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2px;
+    transition: opacity 0.3s;
+}
+
+/* =========================================
+   12. العنصر الدوار 3D
+   ========================================= */
+.item-spin-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.item-spin-container {
+    width: 100%;
+    height: 160px;
     display: flex;
     align-items: center;
-    height: 26px;
-    font-size: 0.7rem;
+    justify-content: center;
+    perspective: 800px;
+}
+
+.spin-item-img {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+    animation: continuousSpin3D 5s linear infinite;
+    transform-style: preserve-3d;
+}
+
+@keyframes continuousSpin3D {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+/* =========================================
+   13. شريط البث والتذييل السفلي
+   ========================================= */
+.live-ticker-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--hud-border);
+    background: #000;
     overflow: hidden;
+    height: 32px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
 }
 
 .ticker-label {
-    background: #fff;
-    color: #000;
-    padding: 0 8px;
+    background: var(--text-white);
+    color: var(--bg-black);
+    padding: 0 10px;
     font-weight: bold;
     height: 100%;
     display: flex;
@@ -250,21 +472,44 @@ body {
     white-space: nowrap;
 }
 
-.ticker-content { overflow: hidden; white-space: nowrap; width: 100%; }
-.ticker-text { display: inline-block; animation: marquee 18s linear infinite; }
+.ticker-wrapper { overflow: hidden; white-space: nowrap; width: 100%; }
 
-@keyframes marquee {
+.ticker-track {
+    display: inline-block;
+    white-space: nowrap;
+    animation: tickerMove 20s linear infinite;
+}
+
+.ticker-track span { margin-right: 25px; }
+
+@keyframes tickerMove {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
 }
 
-/* الفوتر */
 .hud-footer {
     display: flex;
     justify-content: space-between;
-    font-size: 0.6rem;
-    color: #888;
-    border-top: 1px solid #fff;
-    padding-top: 6px;
-    direction: ltr;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--hud-border);
+    padding-top: 8px;
+}
+
+.white-glow {
+    color: var(--text-white);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+.blink-static { animation: blink 1s steps(2, start) infinite; }
+
+@keyframes blink { to { visibility: hidden; } }
+
+/* =========================================
+   14. التجاوب مع الشاشات
+   ========================================= */
+@media (max-width: 1024px) {
+    .hud-grid { grid-template-columns: 1fr; }
+    .side-decor, .frame-corners { display: none; }
 }
