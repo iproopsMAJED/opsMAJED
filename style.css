@@ -1,5 +1,5 @@
 /* =========================================
-   1. الإعدادات الأساسية والألوان (Black & White Theme)
+   1. Base Setup & Monochrome Theme (LTR)
    ========================================= */
 :root {
     --bg-black: #000000;
@@ -22,17 +22,18 @@
 body {
     background-color: var(--bg-black);
     color: var(--text-white);
-    font-family: var(--font-arabic);
+    font-family: var(--font-mono);
     overflow-x: hidden;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    direction: ltr;
 }
 
 /* =========================================
-   2. المؤثرات البصرية والخلفية
+   2. CRT / TV Effects
    ========================================= */
 .tv-static-fullscreen {
     position: fixed;
@@ -74,7 +75,7 @@ body {
 }
 
 /* =========================================
-   3. تفاصيل وزخارف الأطراف الخارجية (HUD Outer Edge Decor)
+   3. Outer Edge Decor
    ========================================= */
 .frame-corners {
     position: fixed;
@@ -91,7 +92,6 @@ body {
 .corner-bl { bottom: 10px; left: 12px; }
 .corner-br { bottom: 10px; right: 12px; }
 
-/* المسطرة والرموز الجانبية في الأطراف */
 .side-decor {
     position: fixed;
     top: 50%;
@@ -123,13 +123,13 @@ body {
 }
 
 /* =========================================
-   4. الحاوية الرئيسية والزوايا الداخلية (ممتدة يمين ويسار)
+   4. Main Container
    ========================================= */
 .hud-container {
     position: relative;
     z-index: 10;
-    width: 98%;               /* تم التوسيع ليشمل الأطراف تقريباً بالكامل */
-    max-width: 1800px;         /* الحد الأقصى للعرض لاستغلال الشاشات العريضة */
+    width: 98%;
+    max-width: 1800px;
     min-height: 94vh;
     border: 1px solid var(--hud-border);
     background: var(--panel-bg);
@@ -141,7 +141,6 @@ body {
     margin: 10px auto;
 }
 
-/* زوايا الإطار الداخلي */
 .corner-bracket {
     position: absolute;
     width: 15px;
@@ -157,7 +156,7 @@ body {
 .corner-bracket.bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
 
 /* =========================================
-   5. شريط الهيدر العلوي
+   5. Header
    ========================================= */
 .hud-header {
     display: flex;
@@ -169,16 +168,16 @@ body {
 }
 
 .header-section { font-size: 0.85rem; }
-.text-right { text-align: right; }
-.text-center { text-align: center; }
 .text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
 
 .system-status { font-weight: bold; color: var(--text-white); }
 .header-sub { color: var(--text-muted); font-size: 0.75rem; }
 .time-widget { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; }
 
 /* =========================================
-   6. شبكة الأعمدة (HUD Grid)
+   6. Grid Columns
    ========================================= */
 .hud-grid {
     display: grid;
@@ -193,7 +192,6 @@ body {
     gap: 15px;
 }
 
-/* النوافذ واللوحات العامة */
 .hud-panel {
     border: 1px solid var(--hud-border);
     background: rgba(0, 0, 0, 0.9);
@@ -213,8 +211,16 @@ body {
     justify-content: space-between;
 }
 
+.window-controls span {
+    margin-left: 6px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.window-controls span:hover { opacity: 1; }
+
 /* =========================================
-   7. الأزرار والقائمة الجانبية
+   7. Navigation
    ========================================= */
 .nav-container {
     display: flex;
@@ -223,13 +229,15 @@ body {
 }
 
 .nav-btn {
-    display: block;
-    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 14px;
     border: 1px solid var(--hud-border);
     color: var(--text-white);
     text-decoration: none;
     font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     transition: all 0.2s ease;
     background: rgba(255, 255, 255, 0.02);
 }
@@ -241,21 +249,23 @@ body {
 }
 
 /* =========================================
-   8. البطاقة الشخصية الوسطى
+   8. Profile Card
    ========================================= */
 .profile-card {
     border: 1px solid var(--hud-border);
-    padding: 20px;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
+    gap: 15px;
     background: rgba(0, 0, 0, 0.95);
 }
 
 .avatar-wrapper {
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
 }
 
 .avatar-box {
@@ -273,12 +283,20 @@ body {
     filter: grayscale(100%) contrast(120%);
 }
 
-.profile-details { flex-grow: 1; }
-.profile-name { font-size: 1.8rem; font-family: var(--font-mono); letter-spacing: 1px; }
-.profile-tag { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
-.profile-quote { font-size: 0.8rem; font-style: italic; margin-bottom: 12px; }
+.profile-details {
+    flex-grow: 1;
+    text-align: left;
+}
 
-.profile-links { display: flex; gap: 10px; }
+.profile-name { font-size: 1.8rem; font-family: var(--font-mono); letter-spacing: 1px; margin-bottom: 2px; }
+.profile-tag { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; }
+.profile-quote { font-size: 0.8rem; font-family: var(--font-arabic); font-style: italic; color: #ccc; }
+
+.profile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 
 .social-link {
     display: inline-flex;
@@ -291,6 +309,7 @@ body {
     font-size: 0.75rem;
     font-family: var(--font-mono);
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .social-link:hover {
@@ -299,12 +318,13 @@ body {
 }
 
 /* =========================================
-   9. نافذة الترمينال
+   9. Terminal
    ========================================= */
 .terminal-panel {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    min-height: 250px;
 }
 
 .terminal-body {
@@ -315,6 +335,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 10px 0;
+    text-align: left;
 }
 
 .terminal-log p { margin-bottom: 5px; line-height: 1.4; }
@@ -323,7 +344,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 10px;
+    margin-top: auto;
 }
 
 .terminal-prompt { color: var(--text-white); }
@@ -339,7 +360,7 @@ body {
 }
 
 /* =========================================
-   10. معلومات اللاعب والمهارات
+   10. Info & Skills
    ========================================= */
 .info-row {
     display: flex;
@@ -379,13 +400,27 @@ body {
 
 .bar-inner { height: 100%; background: var(--text-white); }
 
+.status-panel .panel-content p {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.progress-steps {
+    font-family: var(--font-mono);
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    margin-top: 8px;
+}
+
 /* =========================================
-   11. نافذة الفيديو
+   11. Video Window
    ========================================= */
 .video-container {
     position: relative;
     width: 100%;
-    height: 150px;
+    height: 140px;
     overflow: hidden;
     border: 1px solid var(--hud-border);
     background: #000;
@@ -412,7 +447,7 @@ body {
 }
 
 /* =========================================
-   12. العنصر الدوار 3D
+   12. 3D Spinner Item
    ========================================= */
 .item-spin-panel {
     display: flex;
@@ -424,7 +459,7 @@ body {
 
 .item-spin-container {
     width: 100%;
-    height: 160px;
+    height: 140px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -432,8 +467,8 @@ body {
 }
 
 .spin-item-img {
-    width: 125px;
-    height: 125px;
+    width: 110px;
+    height: 110px;
     object-fit: cover;
     border-radius: 10px;
     border: 2px solid #ffffff;
@@ -448,7 +483,7 @@ body {
 }
 
 /* =========================================
-   13. شريط البث والتذييل السفلي
+   13. Live Feed Ticker & Footer
    ========================================= */
 .live-ticker-bar {
     display: flex;
@@ -464,7 +499,7 @@ body {
 .ticker-label {
     background: var(--text-white);
     color: var(--bg-black);
-    padding: 0 10px;
+    padding: 0 12px;
     font-weight: bold;
     height: 100%;
     display: flex;
@@ -480,7 +515,7 @@ body {
     animation: tickerMove 20s linear infinite;
 }
 
-.ticker-track span { margin-right: 25px; }
+.ticker-track span { margin-right: 25px; font-family: var(--font-arabic); }
 
 @keyframes tickerMove {
     0% { transform: translateX(0); }
@@ -507,7 +542,7 @@ body {
 @keyframes blink { to { visibility: hidden; } }
 
 /* =========================================
-   14. التجاوب مع الشاشات
+   14. Responsiveness
    ========================================= */
 @media (max-width: 1024px) {
     .hud-grid { grid-template-columns: 1fr; }
